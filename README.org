@@ -2,11 +2,15 @@
 
 ** Dependencies
 #+BEGIN_SRC sh
+# pip3 packages
 arrow
-BeautifulSoup4
+bs4
 requests
 docopt
 iterfzf
+
+# packages
+fzf  # used for selecting autocompletion alternatives
 #+END_SRC
 
 ** Usage
@@ -26,4 +30,67 @@ Options:
 Note:
    If <saved_route> is provided as well as <from_stop> and/or <to_stop>
    then one can override the from/to field of the <saved_route>.
+#+END_SRC
+
+** Example usage
+*** From Solsiden to Elgeseter
+#+BEGIN_SRC sh
+$ atb Solsiden Elgeseter
+:: AtB
+:: From Solsiden (Trondheim) to Elgeseter gate (Trondheim)
+19:30 0:10 22 	->  9
+19:31 0:11 9 	->  4
+19:35 0:11 4 	->  7
+19:40 0:11 7 	->  9
+19:51 0:11 9 	->  4
+19:55 0:11 4 	->  66
+19:57 0:12 66 	->  55 	->  22
+20:00 0:10 22 	->  7
+20:10 0:11 7 	->  9
+20:11 0:11 9 	->  walking
+#+END_SRC
+
+*** Using predefined route: home
+You can predefine routes in a ~routes.json~ file. By default
+this file is stored in ~\~/.config/atb/routes.json~, but it
+can be set by using the ~--routes-file~ option, as seen
+in the following example.
+
+#+BEGIN_SRC sh
+# See example_routes.json
+$ atb --routes-file example_routes.json home
+:: AtB
+:: From Solsiden (Trondheim) to Elgeseter gate (Trondheim)
+19:30 0:10 22 	->  9
+19:31 0:11 9 	->  4
+19:35 0:11 4 	->  7
+19:40 0:11 7 	->  9
+19:51 0:11 9 	->  4
+19:55 0:11 4 	->  66
+19:57 0:12 66 	->  55 	->  22
+20:00 0:10 22 	->  7
+20:10 0:11 7 	->  9
+20:11 0:11 9 	->  walking
+#+END_SRC
+
+*** Overridden saved route: home
+Sometimes you want to override your usual route. To achieve this
+just use the ~--to~ and ~--from~ options. In the following example
+the from bus-stop for the route 'home' is overriden with 'Hommelvik'.
+
+#+BEGIN_SRC sh
+# See example_routes.json
+$ atb --routes-file example_routes.json home --from Hommelvik
+:: AtB
+:: From Hommelvik to Studentersamfundet (Trondheim)
+20:36 0:42 310
+20:36 0:34 310 	->  46
+22:36 0:42 310
+22:36 0:34 310 	->  46
+06:06 0:42 310
+06:06 0:34 310 	->  46
+06:40 0:42 310
+06:40 0:36 310 	->  3
+06:51 0:39 310
+06:51 0:34 310 	->  46
 #+END_SRC
