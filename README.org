@@ -1,0 +1,29 @@
+* AtB Cli
+
+** Dependencies
+#+BEGIN_SRC sh
+arrow
+BeautifulSoup4
+requests
+docopt
+iterfzf
+#+END_SRC
+
+** Usage
+#+BEGIN_SRC sh
+Usage: atb [(<from_stop> <to_stop>) | <saved_route>] [options]
+
+Options:
+  --pretty
+  --terse
+  -v, --verbose                  Enable verbose output
+  --no-suggestions               Disable the use of AtB bus-stop suggestions (on by default when --to or --from is provided)
+  --routes-file <routes_file>    Use a custom route file (default: ~/.config/atb/routes.json)
+  --from <from_stop>             Alternative way to specify, or override 'from' bus-stop.
+  --to <to_stop>                 Alternative way to specify, or override 'to' bus-stop.
+
+
+Note:
+   If <saved_route> is provided as well as <from_stop> and/or <to_stop>
+   then one can override the from/to field of the <saved_route>.
+#+END_SRC
